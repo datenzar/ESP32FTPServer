@@ -47,11 +47,14 @@
 #define FTP_CMD_SIZE 255 + 8 // max size of a command
 #define FTP_CWD_SIZE 255 + 8 // max size of a directory name
 #define FTP_FIL_SIZE 255     // max size of a file name
+#define FTP_BUF_SIZE (8192*1)-1 //512   // size of file buffer for read/write
 
 #define FTP_BUF_SIZE 4096 //512   //  700 KByte/s download in AP mode, direct connection.
 class FtpServer
 {
 public:
+
+  FtpServer();
   void    begin(String uname, String pword);
   void    handleFTP();
 
