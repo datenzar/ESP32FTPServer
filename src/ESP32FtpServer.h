@@ -20,6 +20,7 @@
  */
 //  2017: modified by @robo8080
 //  2019: modified by @fa1ke5
+//  2019: modified by @HenrikSte
 
 /*******************************************************************************
  **                                                                            **
@@ -56,7 +57,7 @@ public:
 
   FtpServer();
   void    begin(String uname, String pword);
-  void    handleFTP();
+  int     handleFTP();
 
 private:
  bool haveParameter();
