@@ -46,12 +46,12 @@ void FtpServer::begin(String uname, String pword)
 	_FTP_USER=uname;
 	_FTP_PASS = pword;
 
-  if(!SD.begin())
+  if(!SD_MMC.begin())
   {
       Serial.println("Card Mount Failed");
       return;
   }
-  uint8_t cardType = SD.cardType();
+  uint8_t cardType = SD_MMC.cardType();
 
   if(cardType == CARD_NONE){
       Serial.println("No SD card attached");
@@ -336,7 +336,7 @@ boolean FtpServer::processCommand()
           dir = String(cwdName) +"/" + parameters;
         }        
 
-        if (SD.exists(dir))
+        if (SD_MMC.exists(dir))
         {
           strcpy(cwdName, dir.c_str());
           client.println( "250 CWD Ok. Current directory is \"" + String(dir) + "\"");
@@ -540,6 +540,9 @@ boolean FtpServer::processCommand()
   //
   else if( ! strcmp( command, "MLSD" ))
   {
+    #ifdef FTP_DEBUG
+    	Serial.println("Received MLSD command");
+    #endif
     if( ! dataConnect())
     {
       client.println( "425 No data connection MLSD");
@@ -548,6 +551,9 @@ boolean FtpServer::processCommand()
     {
 	    client.println( "150 Accepted data connection");
       uint16_t nm = 0;
+    #ifdef FTP_DEBUG
+      Serial.println( "Opening path " + String(cwdName));
+    #endif
 //      Dir dir= SD.openDir(cwdName);
       File dir= SD_MMC.open(cwdName);
       char dtStr[ 15 ];
