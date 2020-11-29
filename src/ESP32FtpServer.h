@@ -19,6 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 //  2017: modified by @robo8080
+//  2019: modified by @fa1ke5
 //  2019: modified by @HenrikSte
 
 /*******************************************************************************
@@ -28,12 +29,13 @@
  *******************************************************************************/
 
 // Uncomment to print debugging info to console attached to ESP8266
-//#define FTP_DEBUG
+#define FTP_DEBUG
 
 #ifndef FTP_SERVERESP_H
 #define FTP_SERVERESP_H
 
-#include "SD.h"
+//#include "Streaming.h"
+#include "SD_MMC.h"
 #include <FS.h>
 #include <WiFiClient.h>
 
@@ -59,6 +61,8 @@ public:
   uint8_t isConnected();
 
 private:
+ bool haveParameter();
+bool    makeExistsPath( char * path, char * param = NULL );
   void    iniVariables();
   void    clientConnected();
   void    disconnectClient();
